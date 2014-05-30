@@ -1,4 +1,5 @@
 /auto/
+clean.sh
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
