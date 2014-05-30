@@ -1,0 +1,115 @@
+\documentclass{bkcnotes}
+\usepackage{bkc}
+
+\setcourse{Partial Differential Equations}
+\setnotetitle{Introduction}
+\setnoteimage{img/partial}
+
+\newcommand{\todo}[1]{{\bf TODO: } #1\\}
+
+\usepackage{mathtools}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Partial differential equations, or PDEs for short, are are relations
+between a function $u: \R^n \to \R$ and its partial
+derivatives. Shortly, we will see that PDEs arise in many natural
+areas of mathematical inquiry from applied mathematics and physics to
+geometry and the study of complex analytic functions. In addition,
+PDEs are interesting objects in their own right and present some
+interesting challenges. Most of the time the question "Can we write
+down a solution to this PDE?" is answered in the negative:
+No. Although the outlook may look bleak, we will see that there are
+many techniques available to extract as much information as possible
+from a PDE and at least partially rectify our position in the struggle
+to find solutions.
+
+\section{Examples of PDEs}
+We will begin by looking at some concrete examples of PDEs and where
+they arise in context.
+
+\subsection{Continuum Mechanics}
+The first example that we will explore is the 1-dimensional balance
+law. We imagine our domain to be a 1-dimensional interval, $I$, of
+length $L$. 
+\todo{Add a picture of the rod}
+We are interested in the density of some given quantity
+such as mass, energy, number of particles, etc. at location $x$ and
+time $t \in (0,\infty)$. Let this quantity, measured in amount per
+unit length be given by the function 
+\[
+u(x,t) : \R \times \R \to \R
+\] 
+To understand the change in the density we will need to quantify the
+"flow" of the quantity that we are interested throughout $I$. The
+\textit{flux}, $\phi(x,t)$ is the amount of quantity crossing $x$
+"out" at time $t$ measure in amount per unit time. To complete our
+model we imagine that the interval $I$ lives inside some ambient space
+that is either adding or removing some quantity at each point of
+$I$. The action of the ambient space on $I$ will be captured by some
+function $f(x,t)$ called the \textit{source} (or \textit{sink})
+term measure in amount per unit length per unit time.
+
+The balance law is as follows: Fix any subsection $(a,b) \subset
+I$, then
+\todo{fix the spacing of the text under the braces}
+\begin{equation}
+  \label{eq:balance}
+  \frac{d}{dt} \int_a^b u(x,t)dx =
+  \underbrace{\phi(a,t)}_{\mathclap{\text{flow into } a}} -
+  \underbrace{\phi(b,t)}_{\text{flow out of } b} +
+  \int_a^b f(x,t)dx
+\end{equation}
+Assuming that $u,\phi \in C^1$ (i.e. they have continuous partial
+derivatives) then \ref{balance} becomes
+\[
+\int_a^b u_t(x,t)dx = -\int_a^b \phi_x(x,t)dx + \int_a^b f(x,t)dx
+\]
+Collecting terms we arrive at
+\[
+\int_a^b u_t(x,t) + \phi_x(x,t) - f(x,t)dx = 0
+\]
+for all $(a,b) \subset I$. Assuming that the integrand above is
+continuous then \ref{balance} holds if and only if
+\begin{equation}
+  \label{eq:balance-pde}
+  u_t(x,t) + \phi_x(x,t) = f(x,t), x \in (0,L), t \in \R^+
+\end{equation}
+The PDE in \ref{balance-pde} is a local version of \ref{balance}. We
+can then look at some special cases of \ref{balance-pde} to derive
+some interesting balance laws.
+\subsubsection{Transport Equation}
+If we take $\phi = cu, c > 0$ a constant measure in length per time
+then \ref{balance-pde} becomes
+\[
+u_t + cu_x =
+\begin{cases}
+  0         & \text{advection or transport equation} \\
+  \lambda u & \text{advection with growth }(\lambda > 0)
+              \text{ or decay }(\lambda < 0) \\
+  f         & \text{forced advection}
+\end{cases}
+\]
+Each of these assumptions lead to some form of the {\bf transport
+  equation}, a classical linear PDE.
+
+\subsubsection{Heat Equation}
+Now if we let the flux be given by $\phi = - Du_x$ and $f = 0$ we
+arrive at the equation
+\[
+u_t = Du_{xx}
+\]
+with $D > 0$. Physically, this choice of the flux forces movement to
+go from high concentration to low. This equation is known as the {\bf}
+
+\subsubsection{Euler's Equation}
+With minimal restrictions we simply set $\phi = g(u)$ and $f = 0$ to
+yield the PDE
+\[
+u_t + g'(u)u_x = 0
+\]
+When we have that $g'(u) = u$ this is {\bf Euler's equation}, a
+fundamental equation from fluid mechanics.
+\end{document}
