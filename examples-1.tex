@@ -1,0 +1,114 @@
+\documentclass{bkcnotes}
+\usepackage{bkc}
+
+\setcourse{Partial Differential Equations}
+\setnotetitle{Examples of PDEs I}
+\setnoteimage{img/partial}
+
+\newcommand{\todo}[1]{{\bf TODO: } #1\\}
+
+\begin{document}
+\maketitle
+
+We begin with a few examples of PDEs and informally illustrate the
+main techniques for finding solutions. Later on, we'll give the
+rigorous justifications for these manipulations. 
+
+\section{Heat Equation in $D \subset \R^n$}
+We derived the 1-dimensional heat equation last time. Now we will see
+what happens in the cases $n=2,3$. Let $D$ be an open, bounded domain
+in $\R^n$ with a $C^1$ boundary. Then the balance law becomes
+\begin{equation}
+  \label{eq:heat-balance}
+  \frac{d}{dt}\int_{D} u(x,t)dx =
+  -\int_{\partial D} \phi(x,t) \cdot \vec{n}ds + \int_{D}f(x,t)dx
+\end{equation}
+Where $\vec{n}$ is the \textit{outward} unit normal vector. Recall the
+divergence theorem
+\[
+\int_{\partial D} \phi \cdot \vec{n}ds =
+\int_{D} \nabla \cdot \phi dx
+\]
+Then if $e_1,\ldots,e_n$ is an orthonormal basis, we can resolve the
+above into components
+\begin{align*}
+  \nabla \cdot \phi &= \nabla \cdot (\phi_1e_1 + \cdots + \phi_ne_n) \\
+  &= \sum_{i=1}^n \frac{\partial \phi_i}{\partial x_i}
+\end{align*}
+We then specialize the balance law as before to
+\[
+\phi =
+\begin{cases}
+  -D\nabla u & D \in \R \\
+  -A\nabla u & A \in \text{GL}_n(\R)
+\end{cases}
+\]
+So that the balance law reduces to
+\begin{align*}
+  \nabla \cdot (D\nabla u) &= D \nabla \cdot (u_{x_1},u_{x_2}, \ldots, u_{x_n}) \\
+  &= D (u_{x_1x_1} + u_{x_2x_2} + \cdots + u_{x_nx_n}
+\end{align*}
+We then introduce the \textbf{laplacian}
+\[
+\lap = \sum_{k=1}^n u_{x_kx_k}
+\]
+So that we have that $\nabla \cdot \phi = D \lap u$.
+
+\subsection{Local Version of The heat Equation}
+All of the simplification happened under the integral sign. With the
+same choice of $\phi$ above, if we take the equality in
+\ref{heat-balance} to hold pointwise we arive at local version of the
+heat equation
+\begin{equation}
+  \label{eq:heat}
+  u_t = D\lap u + f
+\end{equation}
+Again, the local version of the heat equation admits a fewinteresting
+special cases. The \textbf{steady-state} heat equation remove the time
+derivative taking $u_t = 0$. We also recover the \textbf{Poisson
+  equation}, $\lap u = f$ by choosing $\lap u = -f / D$.
+
+\section{Wave Equation}
+We can also find the wave equation by considering the total force on
+our domain $D$. By Newton's law we have
+\begin{equation}
+  \label{eq:newton}
+  \int_{\partial D} T \der{u}{\vec{n}}ds = T \int_{\partial D} \nabla \cdot \vec{n}ds
+\end{equation}
+Mechanics tells us that we have the equality
+\begin{align*}
+  T \int_{\partial D} \nabla \cdot \vec{n}ds &=
+  \frac{d}{dt}\overbrace{\int_{D}\rho u_t(x,t)dx}^{\text{linear
+      momentum}} \\
+  &= \rho\int_D u_{tt}dx
+\end{align*}
+Dividing the constant $\rho$ through and applying the divergence
+theorem we arrive at the balance law
+\begin{equation}
+  \label{eq:wave-balance}
+  \int_{D} u_{tt}dx = \frac{T}{\rho}\int_{D} \nabla \cdot (\nabla u)dx
+\end{equation}
+
+\subsubsection{Local Wave Equation}
+Taking the equality in \ref{wave-balance} pointwise leads us to the
+\textbf{wave equation}
+\begin{equation}
+  \label{eq:wave}
+  u_{tt} = c^2\lap u, c^2 = \frac{T}{\rho}
+\end{equation}
+Again, if we remove the time dependence in \ref{wave} we arrive at the
+laplace equation $\lap u = 0$.
+
+\subsection{Summary}
+At this point we have derived the four classical PDEs:
+\begin{enumerate}
+\item Transport Equation
+\item Laplace Equation
+\item Heat Equation
+\item Wave Equation
+\end{enumerate}
+as local versions of a corresponding "balance law" with physically
+significant choices of the variables in our model from last
+time. After looking at some more examples of PDEs in other areas of
+mathematics, we will dive into the search for solutions to these PDEs.
+\end{document}
