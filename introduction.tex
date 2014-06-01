@@ -61,7 +61,7 @@ I$, then
   \int_a^b f(x,t)dx
 \end{equation}
 Assuming that $u,\phi \in C^1$ (i.e. they have continuous partial
-derivatives) then ~\ref{balance} becomes
+derivatives) then \eqref{eq:balance} becomes
 \[
 \int_a^b u_t(x,t)dx = -\int_a^b \phi_x(x,t)dx + \int_a^b f(x,t)dx
 \]
@@ -70,17 +70,17 @@ Collecting terms we arrive at
 \int_a^b u_t(x,t) + \phi_x(x,t) - f(x,t)dx = 0
 \]
 for all $(a,b) \subset I$. Assuming that the integrand above is
-continuous then \ref{balance} holds if and only if
+continuous then \eqref{eq:balance} holds if and only if
 \begin{equation}
   \label{eq:balance-pde}
   u_t(x,t) + \phi_x(x,t) = f(x,t), x \in (0,L), t \in \R^+
 \end{equation}
-The PDE in \ref{balance-pde} is a local version of \ref{balance}. We
-can then look at some special cases of \ref{balance-pde} to derive
+The PDE in \eqref{eq:balance-pde} is a local version of \eqref{eq:balance}. We
+can then look at some special cases of \eqref{eq:balance-pde} to derive
 some interesting balance laws.
 \subsubsection{Transport Equation}
 If we take $\phi = cu, c > 0$ a constant measure in length per time
-then \ref{balance-pde} becomes
+then \eqref{eq:balance-pde} becomes
 \[
 u_t + cu_x =
 \begin{cases}
