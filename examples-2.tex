@@ -1,0 +1,169 @@
+\documentclass{bkcnotes}
+\usepackage{bkc}
+
+\setcourse{Partial Differential Equations}
+\setnotetitle{Examples of PDEs II}
+\setnoteimage{img/partial}
+
+\newcommand{\todo}[1]{{\bf TODO: } #1\\}
+
+\begin{document}
+\maketitle
+
+\section{Minimal Surface Equation}
+The PDEs we have seen previously have all been motivated by physical
+phenomena. Here, will we explore the geometric phenomenon of minimal
+surfaces in $\R^3$. Let $S$ be a simple closed curve with a
+nice\footnote{In what follows the word "nice" is taken to mean having
+  enough smoothness to justify the use of any theorems that arise in
+  the exposition. Precise definitions will be given later. } projection
+onto the $xy$-plane.
+\todo{Insert a picture}
+As a set, we imagine
+\[
+S = \left\{(x,y,u(x,y) \suchthat (x,y) \in D \right\}
+\]
+With $u$ a nice function and $D$ a nice region in the plane. We can
+also think of $S$ as the zero locus of the function $w(x,y,z) = u(x,y)
+- z$, which has gradient $\nabla w = u_x \vec{i} + u_y\vec{j} -
+\vec{k}$. Then we consider a parameterized path in $S$ given by $p(s)
+= (x(s), y(s), u(x(s),y(s)))$ and the corresponding tangent vector
+\[
+\tau = x'\vec{i} + y'\vec{j} + (u_xx' + u_yy')\vec{k}
+\]
+Then we compute
+\[
+\tau \cdot \nabla w = x'u_x + y'u_y - (u_xx' + u_yy') = 0
+\]
+The unit normal vector field is then
+\[
+\frac{\nabla w}{|\nabla w|} = \frac{u_x\vec{i} + u_y\vec{j}
+  -\vec{k}}{(1+u_x^2+u_y^2)^{1/2}}
+\]
+The surface area is defined as
+\[
+SA = \int\int_D |\nabla w|dxdy \triangleq \int_D |\nabla w|dx
+\]
+We then parameterize the above formula on the closed curve $u$ to give
+us the \textbf{surface area functional}
+\begin{equation}
+  \label{eq:minimal-surface}
+  S(u) = \int_D \sqrt{1 + |\nabla u^2|}dx
+\end{equation}
+Our goal is to minimize the value of $S$ where $u$ varies among $C^1$
+closed curves with given boundary conditions, say $u = g$ on $\partial
+D$.
+
+In the aim of minimizing \eqref{eq:minimal-surface}, we will follow in
+the spirit of Euler and Lagrange. The strategy is to apply the
+first derivative test in the absract
+\begin{equation}
+  \label{eq:first-variation}
+  \underbrace{\delta S = \frac{d}{d\alpha} S(u + \alpha \eta)}_{\textbf{first variation}} \Big|_{\alpha=0} =
+  \frac{d}{d\alpha} \int_D \sqrt{1 + |\nabla u + \alpha \nabla \eta |^2}dx
+\end{equation}
+where $\eta \in C^{\infty}$ and $\eta = 0$ on $\partial D$. Carrying
+out the simplification of \eqref{eq:first-variation} we get
+\begin{align*}
+  \frac{d}{d \alpha} \int_D \sqrt{1 + | \nabla u + \alpha \nabla \eta
+    |^2}dx
+  &= \frac{d}{d \alpha} \int_D \sqrt{1 + | \nabla u + \alpha \nabla \eta |^2}dx \\
+  &= \frac{d}{d\alpha} \int_D \left( 1 + (\nabla u + \alpha \nabla
+    \eta ) \cdot (\nabla u + \alpha \nabla \eta )\right)^{1/2}dx
+  \mid_{\alpha=0} \\
+  &= \frac{d}{d\alpha} \int_D \left(1 + |\nabla u|^2 + 2\alpha\nabla u
+    \cdot \nabla \eta + \alpha^2|\nabla
+    \eta|^2\right)^{1/2}dx\mid_{\alpha = 0} \\
+  &= \int_D \frac{d}{d\alpha} \left(1 + |\nabla u|^2 + 2\alpha\nabla u
+    \cdot
+    \nabla \eta + \alpha^2|\nabla \eta|^2\right)^{1/2}dx\mid_{\alpha = 0} \\
+  &= \int_D \frac{1}{2} \cdot \frac{2 \nabla u \cdot \nabla
+    \eta}{\sqrt{1 + |\nabla u|^2}}dx
+\end{align*}
+Which spits out a simplified version of the first variation
+\begin{equation}
+  \label{eq:first-variation-simpl}
+  \delta S = \int_D \frac{\nabla u \cdot \nabla \eta}{\sqrt{1 +
+      |\nabla u|^2}}dx = 0
+\end{equation}
+Recall the following identity of the divergence,
+\begin{equation}
+  \label{eq:divergence-identity}
+  \delta \cdot (f(x,y) \eta(x,y)) = \nabla \cdot f \eta + f \cdot \nabla \eta
+\end{equation}
+The observation is that integrand has the form of a divergence
+\begin{equation}
+  \label{eq:first-variation-divergence}
+  \delta S = \int_D f(x,y) \cdot \nabla \eta dx
+\end{equation}
+with
+\[
+f(x,y) = \frac{\nabla u}{\sqrt{1 + |\nabla u|^2}}
+\]
+We then apply the identity \eqref{eq:divergence-identity} (after
+subtracting off the right hand side) and apply the divergence theorem
+to get
+\begin{align*}
+  \int_D f \cdot \nabla \eta dx = \int_D \left(\nabla \cdot (f \eta) -
+    (\nabla \cdot f)\eta\right)dx &= \int_{\partial} (f\eta) \cdot
+  \vec{n}ds - \int_D (\nabla \cdot f) \eta dx
+\end{align*}
+with $\vec{n}$ the outward unit normal to $\partial D$. Because of the
+restriction that $\eta = 0$ on $\partial D$ the first integral
+vanishes uniformly on $\partial D$ and we arrive at
+\begin{equation}
+  \label{eq:first-variation-final}
+  \delta S = -\int_D
+  \nabla \cdot \left(\frac{\nabla u}{\sqrt{1 + |\nabla u|^2}}\right)\eta dx = 0
+\end{equation}
+In particular, we may choose $\eta$ to be a "bump" function that is
+strictly positive on some open subset of $D$, and 0 otherwise. In this
+case, we must arrive at the \textbf{minimal surface equation} (in
+divergence form)
+\begin{equation}
+  \label{eq:minimal-surface}
+  \nabla \cdot \left(\frac{\nabla u}{\sqrt{1 + |\nabla u|^2}}\right) = 0
+\end{equation}
+This equation expresses the condition that the original curve $u$ has
+zero mean curvature. Finally, we mention that we can "linearize" the
+minimal surface equation by forcing $|\nabla u|^2 \ll 1$ so the
+denominator becomes 1 and we get
+\begin{equation}
+  \label{eq:2d-lap}
+  \nabla \cdot (\nabla u) = u_{xx} + u_{yy} = \lap u = 0
+\end{equation}
+the 2-dimensional homogeneous laplace equation.
+
+\section{Cauchy-Riemann Equations}
+As a final example, we will give some classical PDEs from (complex)
+analysis. Consider a complex function
+\[
+f(z) = u(x,y) + iv(x,y)
+\]
+with $u,v \in C^1(D), D \subset \R^2$. Then we get
+\begin{nthm}(Cauchy-Riemann Equations)
+  $f$ is \textbf{analytic} (has a derivative) if and only if
+  \[
+  u_x = v_y, u_y = -v_x
+  \]
+\end{nthm}
+\begin{proof}
+  \todo{add the proof}
+\end{proof}
+So if a complex function, as opposed to a real one, has a derivative,
+it says more than satisfying a smoothness condition. It means that the
+given function is a solution of system of PDEs.
+
+The complex analytic functions enjoy many special properties. In
+particular, local analyticity (having a derivative at a point) implies
+that $u,v \in C^{\infty}$ i.e. all partial derivatives of all orders
+exist and are continuous. We can differentiate the Cauchy-Riemann
+Equations with respect to $x$ and $y$ respectively to get the
+equivalent conditions
+\[
+u_{xx} = v_{xy}, u_{yy} = -v_{xy}
+\]
+Adding these two equations gives us the Laplace equation for $u$,
+$\lap u = 0$. Likewise, differentiating in the other variables yields
+the corresponding laplace equation $\lap v = 0$.
+\end{document}
