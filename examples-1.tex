@@ -25,33 +25,37 @@ in $\R^n$ with a $C^1$ boundary. Then the balance law becomes
 \end{equation}
 Where $\vec{n}$ is the \textit{outward} unit normal vector. Recall the
 divergence theorem
-\[
-\int_{\partial D} \phi \cdot \vec{n}ds =
-\int_{D} \nabla \cdot \phi dx
-\]
+\begin{equation}
+  \int_{\partial D} \phi \cdot \vec{n}ds =
+  \int_{D} \nabla \cdot \phi dx
+\end{equation}
 Then if $e_1,\ldots,e_n$ is an orthonormal basis, we can resolve the
 above into components
-\begin{align*}
-  \nabla \cdot \phi &= \nabla \cdot (\phi_1e_1 + \cdots + \phi_ne_n) \\
-  &= \sum_{i=1}^n \frac{\partial \phi_i}{\partial x_i}
-\end{align*}
+\begin{equation}
+  \begin{aligned}
+    \nabla \cdot \phi &= \nabla \cdot (\phi_1e_1 + \cdots + \phi_ne_n) \\
+    &= \sum_{i=1}^n \frac{\partial \phi_i}{\partial x_i}
+  \end{aligned}
+\end{equation}
 We then specialize the balance law as before to
-\[
-\phi =
-\begin{cases}
-  -D\nabla u & D \in \R \\
-  -A\nabla u & A \in \text{GL}_n(\R)
-\end{cases}
-\]
+\begin{equation}
+  \phi = \begin{cases}
+    -D\nabla u & D \in \R \\
+    -A\nabla u & A \in \text{GL}_n(\R)
+  \end{cases}
+\end{equation}
 So that the balance law reduces to
-\begin{align*}
-  \nabla \cdot (D\nabla u) &= D \nabla \cdot (u_{x_1},u_{x_2}, \ldots, u_{x_n}) \\
-  &= D (u_{x_1x_1} + u_{x_2x_2} + \cdots + u_{x_nx_n}
-\end{align*}
-We then introduce the \textbf{laplacian}
-\[
-\lap = \sum_{k=1}^n u_{x_kx_k}
-\]
+\begin{equation}
+  \begin{aligned}
+    \nabla \cdot (D\nabla u) &= D \nabla \cdot (u_{x_1},u_{x_2}, \ldots, u_{x_n}) \\
+    &= D (u_{x_1x_1} + u_{x_2x_2} + \cdots + u_{x_nx_n}    
+  \end{aligned}
+\end{equation}
+We then introduce the \textbf{laplacian} operator
+\begin{equation}
+  \label{eq:laplace-op}
+  \lap = \sum_{k=1}^n u_{x_kx_k}
+\end{equation}
 So that we have that $\nabla \cdot \phi = D \lap u$.
 
 \subsection{Local Version of The heat Equation}
@@ -76,12 +80,14 @@ our domain $D$. By Newton's law we have
   \int_{\partial D} T \der{u}{\vec{n}}ds = T \int_{\partial D} \nabla \cdot \vec{n}ds
 \end{equation}
 Mechanics tells us that we have the equality
-\begin{align*}
-  T \int_{\partial D} \nabla \cdot \vec{n}ds &=
-  \frac{d}{dt}\overbrace{\int_{D}\rho u_t(x,t)dx}^{\text{linear
-      momentum}} \\
-  &= \rho\int_D u_{tt}dx
-\end{align*}
+\begin{equation}
+  \begin{aligned}
+    T \int_{\partial D} \nabla \cdot \vec{n}ds &=
+    \frac{d}{dt}\overbrace{\int_{D}\rho u_t(x,t)dx}^{\text{linear
+        momentum}} \\
+    &= \rho\int_D u_{tt}dx
+  \end{aligned}  
+\end{equation}
 Dividing the constant $\rho$ through and applying the divergence
 theorem we arrive at the balance law
 \begin{equation}
