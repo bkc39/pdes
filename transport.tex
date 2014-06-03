@@ -1,0 +1,273 @@
+\documentclass{bkcnotes}
+\usepackage{bkc}
+
+\setcourse{Partial Differential Equations}
+\setnotetitle{Transport Equation}
+\setnoteimage{img/partial}
+
+\newcommand{\todo}[1]{{\bf TODO: } #1\\}
+
+\begin{document}
+\maketitle
+
+Ok. Now it's time to buckle down and start solving some PDEs. We will
+begin with the examples that we found using conservation laws, and in
+particular the transport equation. Before that, however, we need to
+stop waving our hands and give some definitions.
+
+\section{Some Definitions}
+
+Let's define what we have been talking about
+
+\begin{ndefn}(Partial Differential Equation)
+
+  A \textbf{partial differential equation} (PDE) of order $k$ is a
+  relation between a function and its partial derivatives of the form
+  \begin{equation}
+    \label{eq:pde-def}
+    F(D^ku(x),D^{k-1}u(x),\ldots,Du(x),u(x),x) = 0
+  \end{equation}
+  Where
+  \begin{equation}
+    F : \R^{n^k} \times \R^{n^{k-1}} \times \cdots
+    \times \R^n \times \R \times \Omega \lra \R
+  \end{equation}
+  is a given function.
+\end{ndefn}
+
+We also need our first notion of solution of a PDE. Later, we will
+consider more relaxed notions of what it means to solve a PDE, but for
+now we will go with what you would expect
+\begin{ndefn}(Classical solution)
+
+  A function $u(x)$ is a (classical) \textbf{solution} to the PDE
+  \eqref{eq:pde-def} if it is a $C^n$ function in $\Omega$ with $n
+  \geq k$ that satisfies \eqref{eq:pde-def} for each $x \in \Omega$.
+\end{ndefn}
+
+As you can see from the definition, everything hinges on the
+properties of the given function $F$. In particular, it determines how
+hard we will have to fight to find a solution, if any exist at
+all. There are some special cases that we will pay particular
+attention to
+
+\begin{ndefn}(Classification of PDEs)
+  \ \newline \vspace{-20px}
+  \begin{enumerate}
+  \item The PDE \eqref{eq:pde-def} is called \textbf{linear} if $F$ is
+    linear i.e.,
+    \begin{equation}
+      \begin{aligned}
+        F(\alpha &A^k + B^k, \alpha A^{k-1} + B^{k-1}, \ldots, \alpha A + B,x)
+        = \\
+        &\alpha F(A^k,A^{k-1},\ldots,A,x) + F(B^k,B^{k-1},\ldots,B,x)
+      \end{aligned}
+    \end{equation}
+    Or equivalently,
+    \begin{equation}
+      \label{eq:linear}
+      F(D^ku(x),D^{k-1}u(x),\ldots,Du(x),u(x),x) =
+      f(x) + \sum_{|j| \leq k} \alpha_j(x)D^j(x)
+    \end{equation}
+    for every
+    \href{http://en.wikipedia.org/wiki/Multi-index_notation}{multi-index}
+    $j$.
+  \item The PDE \eqref{eq:pde-def} is \textbf{semilinear} if it is
+    linear in the derivatives of highest order. In symbols,
+    \begin{equation}
+      \label{eq:semilinear}
+      f(D^{k-1}u,\ldots,Du,u,x) + \sum_{|j|}\alpha_j(x)D^ju
+    \end{equation}
+  \item If we allow the coefficient functions to bring nonlinearity in
+    the low order derivatives i.e.,
+    \begin{equation}
+      \label{eq:quasilinear}
+      f(D^{k-1}u,\ldots,Du,u,x) + \sum_{|j|}\alpha_j(D^{k-1}u,\ldots,Du,u,x)D^ju
+    \end{equation}
+    we have a \textbf{quasilinear} PDE.
+  \item Finally, if we allow the nonlinearity to affect the highest
+    order derivatives we have a \textbf{fully nonlinear} equation.
+  \end{enumerate}
+\end{ndefn}
+
+\subsection{Examples}
+The PDEs that we derived from localizing balance laws are all linear
+\begin{equation}
+  \label{eq:linear-examples}
+  \begin{aligned}
+    \lap u &= f && \text{(Poisson equation)} \\
+    u_t + b \cdot Du &= 0 && \text{(Transport equation)} \\
+    u_t - \lap u &= 0 && \text{(Heat Equation)} \\
+    u_{tt} - \lap u &= 0 && \text{(Wave equation)}
+  \end{aligned}n
+\end{equation}
+Some semilinear PDEs arise elsewhere in physics (and other areas, of
+course)
+\begin{equation}
+  \label{eq:semilinear-examples}
+  \begin{aligned}
+    u_t + uu_x + u_{xxx} &= 0 && \text{(Korteweg-deVries (KdV) equation)} \\
+    -\lap u &= f(u) && \text{(Nonlinear Poisson equation)} \\
+    u_t - \lap u &= f(u) && \text{(Scalar reaction-diffusion equation)}
+  \end{aligned}
+\end{equation}
+Quasilinear PDEs include
+\begin{equation}
+  \label{eq:quasilinear-examples}
+  \begin{aligned}
+    u_t - uu_x &= 0 && \text{(Euler (also Burger's) equation)} \\
+    u_t + \nabla \cdot F(u) &= 0 && \text{(Scalar Conservation law)}
+  \end{aligned}
+\end{equation}
+For the true monsters which are the fully nonlinear PDEs we have
+\begin{equation}
+  \label{eq:nonlinear-examples}
+  \begin{aligned}
+    \nabla \cdot \left(\frac{\nabla u}{\sqrt{1 + |\nabla u|^2}}\right) &= 0
+    && \text{(Minimal Surface equation)} \\
+    u_t + H(Du,x) &= 0 && \text{(Hamilton-Jacobi equation)} \\
+    u_t + u \cdot Du - \lap u &= -Dp \\
+    \nabla \cdot u &= 0 && \text{(Navier-Stokes Equations)}
+  \end{aligned}
+\end{equation}
+As you might expect, the more the nonlinearity affects the higher
+derivatives the more we will have to wrestle to find solutions. To
+start off, we will concentrate on linear the PDEs
+\eqref{eq:linear-examples} . The plan is to find some techniques that
+we can extend to the more nonlinear types of equations. Each of the
+techniques we will find to solve the classical linear PDEs will
+eventually be extended to nonlinear PDEs which share the critical
+features that make the proofs work. Let's do it to it.
+
+\section{Transport Equation}
+The goal is to solve the transport equation
+\begin{equation}
+  \label{eq:transport}
+  \begin{aligned}
+    u_t + b \cdot D_xu = 0 && \text{in } \R^n \times \R^+    
+  \end{aligned}
+\end{equation}
+with $b \in \R^n$ fixed, for $u(x,t): \R^{n+1} \to \R$. The symbol
+$D_x$ in \eqref{eq:transport} is the derivative with respect to the
+spatial ($x$) variables $D_xu =
+(u_{x_1},u_{x_2},\ldots,u_{x_n})$. Let's think about the geometry of
+\eqref{eq:transport}.
+
+\todo{insert diagram on characteristic line}
+
+Written differently we see that
+\begin{equation}
+  \label{eq:transport-dot}
+  (b,1) \cdot \nabla u = 0
+\end{equation}
+This means that \emph{the directional derivative in the $(b,1)$
+  direction is zero.} As a result, we see that $u$ \emph{must} be
+constant in the $(b,1)$ direction. Just to make sure, let's compute the
+partial derivative
+\begin{equation}
+  \label{eq:directional-der}
+  \frac{d}{ds} u(x + sb, t+s) = D_x(x+sb,t+s)\cdot b + u_t(x+sb,t+s)
+\end{equation}
+for fixed $(x,t)$ and all $s \in \R$. This gives us the key insight
+for solving the PDE: \emph{$u$ is constant on all lines through
+  $(x,t)$ parallel to the vector (b,1)}.
+
+\subsection{Homogeneous Transport Equation}
+
+Now we just need to prescribe the boundary values and then use the
+geometry to fill in the solution for the whole space. This leads us to
+the initial value problem (IVP)
+\vspace{-15px}
+\begin{defn}(Homogeneous Transport IVP)
+
+  The \textbf{initial value problem for the transport equation} is
+  \begin{equation}
+    \label{eq:transport-ivp}
+    \begin{cases}
+      (b,1) \cdot \nabla u(x,t) = 0 & b,x \in \R^n, t \in \R^+ \\
+      u = g & t = 0, g \in C^1(\R^n)
+    \end{cases}
+  \end{equation}
+\end{defn}
+So now we can essentially read off the solution: start on the $\R^n$
+plane with value $g(x,0)$ and then follow the line $(b,1)$ retaining
+the same value. In symbols
+
+\begin{nthm}(Solution of Homogeneous Transport Equation)
+
+  The function
+  \begin{equation}
+    \label{eq:transport-sol}
+    u(x,t) = g(x-tb)
+  \end{equation}
+  is the unique solution to the IVP \eqref{eq:transport-ivp}.
+\end{nthm}
+\begin{proof}
+  Let's just verify this is a solution. The gradient
+  \begin{equation}
+    \label{eq:grad-sol}
+    \begin{aligned}
+      \nabla g(x-tb) &= \der{}{x}g + \der{}{t}g \\
+      &= Dg(x-tb) + Dg(x-tb)\cdot(-b)
+    \end{aligned}
+  \end{equation}
+  Hence,
+  \begin{equation}
+    (b,1) \cdot \nabla u = b \cdot Dg(x-tb) - b\cdot Dg(x-tb) = 0
+  \end{equation}
+  as desired. And clearly on the $\R^n$ hyperplane we have
+  \begin{equation}
+    u(x,0) = g(x - 0b) = g(x)
+  \end{equation}
+  So $g(x-tb)$ is a valid solution.
+
+  As for the uniqueness suppose that there were another solution
+  $v(x,t)$ to the IVP. Because $v = g$ in $\R^n \times \{0\}$ we have
+  that $u=v$ there as well. Because $u$ and $v$ are both constant
+  along each line $(x+sb,s+t)$ they are equal on each line, and hence
+  the whole space.
+\end{proof}
+
+\subsection{Nonhomogeneous Transport Equation}
+Now let's take a look at what happens to the IVP \eqref{eq:transport}
+when the right hand side is not uniformly 0.
+
+\begin{ndefn}(Nonhomogeneous Transport IVP)
+
+  The \textbf{initial value problem for the transport equation} is
+  \begin{equation}
+    \label{eq:ntransport-ivp}
+    \begin{cases}
+      (b,1) \cdot \nabla u(x,t) = f & b,x \in \R^n, t \in \R^+ \\
+      u = g & t = 0, g \in C^1(\R^n)
+    \end{cases}
+  \end{equation}
+\end{ndefn}
+The intuition behind this IVP is nearly identical to
+\eqref{eq:transport-ivp} except now that instead of being constant
+along $(b,1)$ we have an additional $f$ that we need to keep track
+of. In essence we can still read off what the answer should be: The
+initial value on the $\R^n$ plane as well as the total contribution of
+$f$ along the line $(x,0)$ to $(x+sb,t+s)$. This leads us to
+
+\begin{nthm}(Solution of Nonhomogeneous Transport Equation)
+  The function
+  \begin{equation}
+    \label{eq:ntransport-sol}
+    u(x,t) = g(x-tb) + \int_0^t f(x+(s-t)b,s)ds
+  \end{equation}
+  is the unique solution to the IVP \eqref{eq:ntransport-ivp}.
+\end{nthm}
+\begin{proof}
+  This goes very similarly to the homogeneous case. The only
+  difficulty is dealing with that $f$ term. Fortunately for us, it's
+  still just calculus. This time we have
+  \todo{finish the computation.. boring}
+\end{proof}
+
+The key observation was that \emph{the solution must be constant along
+  certain curves}, in this case it was lines. Then, once given the
+initial values on these special lines, we could piece together the
+solution in a straighforward way. This geometric intuition will be
+important in solving more complicated IVPs in the future.
+\end{document}
