@@ -2,7 +2,7 @@
 \usepackage{bkc}
 
 \setcourse{Partial Differential Equations}
-\setnotetitle{Transport Equation}
+\setnotetitle{Transport Equation I}
 \setnoteimage{img/partial}
 
 \newcommand{\todo}[1]{{\bf TODO: } #1\\}
@@ -226,44 +226,6 @@ the same value. In symbols
   that $u=v$ there as well. Because $u$ and $v$ are both constant
   along each line $(x+sb,s+t)$ they are equal on each line, and hence
   the whole space.
-\end{proof}
-
-\subsection{Nonhomogeneous Transport Equation}
-Now let's take a look at what happens to the IVP \eqref{eq:transport}
-when the right hand side is not uniformly 0.
-
-\begin{ndefn}(Nonhomogeneous Transport IVP)
-
-  The \textbf{initial value problem for the transport equation} is
-  \begin{equation}
-    \label{eq:ntransport-ivp}
-    \begin{cases}
-      (b,1) \cdot \nabla u(x,t) = f & b,x \in \R^n, t \in \R^+ \\
-      u = g & t = 0, g \in C^1(\R^n)
-    \end{cases}
-  \end{equation}
-\end{ndefn}
-The intuition behind this IVP is nearly identical to
-\eqref{eq:transport-ivp} except now that instead of being constant
-along $(b,1)$ we have an additional $f$ that we need to keep track
-of. In essence we can still read off what the answer should be: The
-initial value on the $\R^n$ plane as well as the total contribution of
-$f$ along the line $(x,0)$ to $(x+sb,t+s)$. This leads us to
-
-\begin{nthm}(Solution of Nonhomogeneous Transport Equation)
-
-  The function
-  \begin{equation}
-    \label{eq:ntransport-sol}
-    u(x,t) = g(x-tb) + \int_0^t f(x+(s-t)b,s)ds
-  \end{equation}
-  is the unique solution to the IVP \eqref{eq:ntransport-ivp}.
-\end{nthm}
-\begin{proof}
-  This goes very similarly to the homogeneous case. The only
-  difficulty is dealing with that $f$ term. Fortunately for us, it's
-  still just calculus. This time we have
-  \todo{finish the computation.. boring}
 \end{proof}
 
 The key observation was that \emph{the solution must be constant along
