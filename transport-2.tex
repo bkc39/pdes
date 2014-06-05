@@ -29,7 +29,7 @@ we get that will be useful in future discussions on PDEs.
   \end{equation}
 \end{ndefn}
 The intuition behind this IVP is nearly identical to
-\eqref{eq:transport-ivp} except now that instead of being constant
+the homogeneous case, except now that instead of being constant
 along $(b,1)$ we have an additional $f$ that we need to keep track
 of. In essence we can still read off what the answer should be: The
 initial value on the $\R^n$ plane as well as the total contribution of
@@ -42,7 +42,7 @@ $f$ along the line $(x,0)$ to $(x+sb,t+s)$. This leads us to
     \label{eq:ntransport-sol}
     u(x,t) = g(x-tb) + \int_0^t f(x+(s-t)b,s)ds
   \end{equation}
-  is the unique solution to the IVP \eqref{eq:ntransport-ivp}.
+  is a solution to the IVP \eqref{eq:ntransport-ivp}.
 \end{nthm}
 \begin{proof}
   This goes very similarly to the homogeneous case. The only
@@ -52,6 +52,196 @@ $f$ along the line $(x,0)$ to $(x+sb,t+s)$. This leads us to
     \label{eq:change-of-var}
     v(\tau) = u(x-\tau b,t-\tau)
   \end{equation}
+  and compute
+  \begin{equation}
+    \label{eq:v-der}
+    \begin{aligned}
+      \dot{v}(\tau ) &= D_xu(x-\tau b,t-\tau)\cdot(-b) - u_t(x-\tau b,t-\tau) \\
+      &= -(D_xu(x-\tau b,t-\tau)\cdot b + u_t(x-\tau b,t-\tau)) \\
+      &= -f(x-\tau b,t-\tau) && \text{(by substitution in }
+      \eqref{eq:ntransport-ivp})
+    \end{aligned}
+  \end{equation}
+  But
+  \begin{equation}
+    \label{eq:v-int}
+    \begin{aligned}
+      \int_0^t \dot{v}(\tau) d\tau &= v(t) - v(0) \\
+      &= \underbrace{u(x - tb,0)}_{g(x-tb)} - u(x,t)
+    \end{aligned}
+  \end{equation}
+  So we have
+  \begin{equation}
+    g(x-tb) - u(x,t) = -\int_0^t f(x-\tau b, t - \tau)d\tau 
+  \end{equation}
+  Then apply the change of variables $-\tau = s = t$ to get
+  \begin{equation}
+    \begin{aligned}
+      \int_0^t f(x-\tau b, t-\tau)d\tau &= -\int_t^0 f(x + (s-t)b,s)ds \\
+      &= \int_0^t f(x+(s-t)b,s)ds
+    \end{aligned}
+  \end{equation}
+  Giving us the final solution
+  \begin{equation}
+    \label{eq:nhom-sol}
+    u(x,t) = g(x-tb) + \int_0^t f(x+(s-t)b,s)ds
+  \end{equation}
 \end{proof}
 
+\subsection{Interpretation of the Solution}
+Here's an interpretation of the solution. The key idea was in dinding
+the solution was the fact that it had to be \emph{translation
+  invariant}. This can be captured in the following operation:
+
+\begin{ndefn}(Solution Operator to Transport Equation)
+
+  For any $h(x,t)$ let the operator $T_b$ be given by
+  \begin{equation}
+    \label{eq:soln}
+    [T_b(\sigma)h](x,t) = h(x-\sigma b,t)
+  \end{equation}
+  Then $T_b(t)$ is the \textbf{solution operator} for the homogeneous
+  transport equation.
+\end{ndefn}
+Viewed in this light, \eqref{eq:nhom-sol} reads
+\begin{equation}
+  \label{eq:nhom-sol-op}
+  u(x,t) = [T_b(t)g](x) + \int_0^t [T_b(t-s)f](x,s)ds
+\end{equation}
+which makes the symmetry of the solution more evident.
+
+\section{A Nonlinear Transport Equation}
+Let's extend our symmetry method to attack a slightly non-linear
+transport equation. Here, we will take $f$ in
+\eqref{eq:ntransport-ivp} and replace it with a term proportional to
+$u$ so that the rate of motion along $(b,1)$ is proportional to $u$
+itself.
+
+\begin{ndefn}(Proportional Transport IVP)
+
+  The \textbf{proportional transport IVP} is
+  \begin{equation}
+    \label{eq:ptransport-ivp}
+    \begin{cases}
+      u_t + b\cdot D_xu + cu = 0 & \text{in } \R^n \times \R^+
+      u(x,0) = g
+    \end{cases}
+  \end{equation}
+  with $b \in \R^n,c\in \R$ are fixed and $g \in C^1$.
+\end{ndefn}
+The plan is to use reasoning similar to \eqref{eq:v-der} for ordinary
+differential equation (ODE) inspirtation. The plan is to run the proof
+of \eqref{eq:ntransport-ivp} as closely as possible.
+
+\begin{nthm}(Solution of Proportional Transport Equation)
+  The IVP \eqref{eq:ptransport-ivp} has a solution
+  \begin{equation}
+    \label{eq:ptransport-sol}
+    u(x,t) = e^{-ct}g(x-tb)
+  \end{equation}
+\end{nthm}
+\begin{proof}
+  Like last time, lets start with a change of variables. This will
+  reduce us to an ODE again. For $v(s) = u(x+sb,t+s)$ we get
+  \begin{equation}
+    \label{eq:trans-ode}
+    \dot{v}(s) + cv(s) = 0
+  \end{equation}
+  We then solve the ODE giving us
+  \begin{equation}
+    \label{eq:ode-sol}
+    v(s) = u(x+sb,t+s) = k(x,t)e^{-cs}
+  \end{equation}
+  then
+  \begin{equation}
+    \label{eq:u-sol}
+    \underbrace{u(x-tb,0)}_{g(x-tb)} = k(x,t)e^{ct}
+  \end{equation}
+  meaning $k(x,t) = e^{-ct}g(x-tb)$. Hence,
+  \begin{equation}
+    \label{eq:u-sol}
+    u(x+sb,t+s) = e^{-ct}g(x-tb)e^{-cs}
+  \end{equation}
+  Specializng to $s=0$ we arrive at the solution
+  \begin{equation}
+    \label{eq:ptransport-sol}
+    u(x,t) = e^{-ct}g(x-tb)
+  \end{equation}
+\end{proof}
+Again, we used ODE methods along the lines of summetry to solve the
+problem. Later on, we will return to this theme of reuction to ODE for
+more general, nonlinear PDE.
+
+\section{Weak Solutions}
+Another useful observation is that the nature of the proof did not
+require any smoothness of the initial data, $g$ in any of the
+transport equations that we have seen thus far. In what follows, we
+will consider what happens when we merely require that $g$ is $C^0$ or
+even merely bounded.
+
+the idea here is to multiply the transport equation by a smooth
+function $\phi(x,t)$ and integrate over the domain:
+\begin{equation}
+  \label{eq:i}
+  I = \int_0^\infty\int_{\R^n} (u_t + b\cdot D_xu)\phi dxdt
+\end{equation}
+In order to ensure that $I$ is well-behaved we will additionally
+requre that $\phi$ have compact support. Later on, we will call such
+functions \emph{test functions}.
+
+To make more sense of the integral \eqref{eq:i} notice that
+\begin{equation}
+  \label{eq:der-note}
+  D(u\phi)\cdot (b,1) = (u_t + D_xu\cdot b)\phi + u(\phi_t + D_x\phi\cdot b)
+\end{equation}
+Now apply \eqref{eq:der-note} to \eqref{eq:i} to see
+\begin{equation}
+  \label{eq:i-div-form}
+  I = \int_0^\infty\int_{\R^n} D(u\phi)\cdot (b,1)dxdt 
+  - \int_0^\infty\int_{\R^n} u(\phi_t + D_x\phi\cdot b)dxdt
+\end{equation}
+Next we take advantage of the fact that $\phi$ has compact support by
+hitting \eqref{eq:i-div-form} with the scalar divergence theorem
+\begin{equation}
+  \label{eq:scalar-div-thm}
+  \int_{\Omega \subset \R^{n+1}} Dw(y)dy = \int_{\partial \Omega}w(y)\vec{n}(y)dy
+\end{equation}
+where $\vec{n}(y)$ is the outward unit normal field to $\partial
+\Omega$. Let $B_M^+$ be a half ball with radius $M > \diam \text{supp}
+\phi$.
+
+\todo{insert diagram of what we are doing e.f. 6190 notes pg 16}
+
+Then
+\begin{equation}
+  \int_0^\infty \int_{\R^n} D(u\phi)dxdt =
+  \underbrace{\int_{\partial B_M^+} u\phi\cdot \vec{n}ds}_{0} +
+  \int_{|x|\leq M} u\phi \vec{n}dx
+\end{equation}
+But $\vec{n} = (0,-1)$ so $\vec{n} \cdot (b,1) = -1$. These
+considerations lead us to
+
+\begin{ndefn}(Weak Solution of Transport Equation)
+  
+  We say that $u(x,t) \in C^0$ is a weak solution of the homogeneous
+  transport equation if
+  \begin{equation}
+    \label{eq:weak-sol}
+    \int_{\R^n} g(x)\phi(x,0)dx +
+    \int_0^\infty\int_{\R^n} u(\phi_t +
+    D_x\phi\cdot b)dxdt =
+    0
+  \end{equation}
+  for all $C^1(\R^n \times\R^+)$ test functions $\phi$.
+\end{ndefn}
+
+\subsection{Meaning of the Weak Solution}
+Ok. We have a defintion. This leads us to the question "Is this
+nonsense?". At a first glance you might think that the answer is "Yes"
+due to the fact that because the derivatives are passed to the test
+function in \eqref{eq:weak-sol} we admit \emph{non-differentiable
+  solutions}. This clearly violates the defintion we gave of classical
+solutions. However, physically, these solutions seem to make
+sense. Suppose that $g$ is $C^0$ and try $u(x,t) = g(x-tb)$ in
+\eqref{eq:weak-sol} we get
 \end{document}
