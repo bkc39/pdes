@@ -168,7 +168,7 @@ of \eqref{eq:ntransport-ivp} as closely as possible.
     u(x,t) = e^{-ct}g(x-tb)
   \end{equation}
 \end{proof}
-Again, we used ODE methods along the lines of summetry to solve the
+Again, we used ODE methods along the lines of symmetry to solve the
 problem. Later on, we will return to this theme of reuction to ODE for
 more general, nonlinear PDE.
 
@@ -207,7 +207,7 @@ hitting \eqref{eq:i-div-form} with the scalar divergence theorem
   \int_{\Omega \subset \R^{n+1}} Dw(y)dy = \int_{\partial \Omega}w(y)\vec{n}(y)dy
 \end{equation}
 where $\vec{n}(y)$ is the outward unit normal field to $\partial
-\Omega$. Let $B_M^+$ be a half ball with radius $M > \diam \text{supp}
+\Omega$. Let $B_M^+$ be a half ball with radius $M > \diam{\text{supp}}
 \phi$.
 
 \todo{insert diagram of what we are doing e.f. 6190 notes pg 16}
@@ -223,8 +223,8 @@ considerations lead us to
 
 \begin{ndefn}(Weak Solution of Transport Equation)
   
-  We say that $u(x,t) \in C^0$ is a weak solution of the homogeneous
-  transport equation if
+  We say that $u(x,t) \in C^0$ is a \textbf{weak solution} of the
+  homogeneous transport equation if
   \begin{equation}
     \label{eq:weak-sol}
     \int_{\R^n} g(x)\phi(x,0)dx +
@@ -243,5 +243,48 @@ function in \eqref{eq:weak-sol} we admit \emph{non-differentiable
   solutions}. This clearly violates the defintion we gave of classical
 solutions. However, physically, these solutions seem to make
 sense. Suppose that $g$ is $C^0$ and try $u(x,t) = g(x-tb)$ in
-\eqref{eq:weak-sol} we get
+\eqref{eq:weak-sol}. Let $x = \xi + \eta b, t = \eta$ so that $x - tb
+= \xi$. Then
+\begin{equation}
+  \begin{aligned}
+    \int_0^\infty \int_{\R^n} g(x-tb)D\phi(x,t)\cdot (b,1) &=
+    \int_{\R^n} \int_0^\infty g(\xi ) \phi_t(\xi+\eta b,\eta) +
+    D_x\phi(\xi+\eta b,\eta)d\eta d\xi \\ &=
+    \int_{\R^n}g(\xi)\int_0^\infty \frac{d}{d\eta}\phi(\xi+\eta
+    b,\eta)d\eta\xi \\ &=
+    \int_{\R^n}g(\xi)(-\phi(\xi,0))d\xi && \phi \text{ has compact support}
+  \end{aligned}
+\end{equation}
+Localizing the integral gives us the original solution to the
+homogeneous transport equation.
+
+\subsection{Uniqueness}
+We can use the weak solution to get an easy proof of a uniqueness
+theorem.
+
+\begin{nthm}(Uniqueness of Weak Solution)
+
+  The homogeneous transport equation has only one weak solution,
+  $u(x,t) = g(x-tb)$.
+\end{nthm}
+\begin{proof}
+  Suppose that there were two weak solutions $u_1,u_2$. Then the
+  difference satisfies
+  \begin{equation}
+    \label{eq:diff-id}
+    \int_0^\infty \int_{\R^n} (u_1 - u_2)D\phi\cdot (b,1)dxdt = 0
+  \end{equation}
+  for all test functions $\phi$. Recall that because $\phi$ has
+  compact so does $D\phi\cdot (b,1)$ and thus \eqref{eq:diff-id} is
+  equivalent to
+  \begin{equation}
+    \int_0^\infty \int_{\R^n} (u_1 - u_2)\psi dx dt = 0
+  \end{equation}
+  for all smooth functions $\psi$ with compact support. Thus $u_1 -
+  u_2 = 0$ because $\psi$ can be taken strictly positive. Hence, $u_1
+  = u_2$.
+\end{proof}
+
+This kind of argument for uniqueness works even when $u$ is much
+nastier than $C^0$ and we will exploit this later.
 \end{document}
