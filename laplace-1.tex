@@ -1,0 +1,198 @@
+\documentclass{bkcnotes}
+\usepackage{bkc}
+
+\setcourse{Partial Differential Equations}
+\setnotetitle{Laplace Equation I\ : \\ Derivation}
+\setnoteimage{img/partial}
+
+\newcommand{\todo}[1]{{\bf TODO: } #1\\}
+
+\begin{document}
+\maketitle
+
+Now we begin our study of the laplace equation. This is arguably the
+most important linear PDE and so strap in, we are gonna be grinding on
+this for a while. The plan is to go through some of the historical
+motivation before trying to find some solutions. With the laplace
+equation we will be able to deduce all sorts of properties of the
+solutions without having a concrete represenation for the
+solution. Finally, we will come up with some representation formulae
+for solutions to round out our efforts. This is a long, uphill fight
+but it will definitely be worth it.
+
+\section{Historical Motivation for Laplace \\ and Poisson's equations}
+
+Our plan is to derive the Laplace and it's nonhomogeneous counterpart,
+the Poisson equation, from the Newtonian theory of
+gravitation. Consider a test particle $m$ moving about a fixed
+gravitating center $M$ in $\R^3$.
+
+\todo{insert picture}
+
+The particle of mass $m$ experiences an attractive force proportional
+to the inverse square of the displacement
+\begin{equation}
+  \label{eq:inverse-square}
+  f = \frac{-\rho}{|x-y|^2}\underbrace{\frac{x-y}{|x-y|}}_{\text{unit vector}}
+\end{equation}
+with $\rho$ constant.
+
+\begin{ndefn}(Gravitational Potential)
+
+  The \textbf{gravitational
+    potential} with respect to $x$ of the mass $m$ at the point $y$ is
+  \begin{equation}
+    \label{eq:potential}
+    u = \frac{\rho}{|x-y|}
+  \end{equation}
+\end{ndefn}
+
+\subsection{Some Vector Calculus}
+We want to compute $\nabla_x(u)$. Recall that if $u \in C^1(\Omega), v
+\in C^1(\Omega, \R^3)$ for some domain $\Omega \subset \R^3$ this means
+we have continuous vector fields $\nabla u(x)$ and $\nabla v(x)$ for
+fixed $x$ such that
+\begin{equation}
+  \label{eq:grad-def}
+  \begin{aligned}
+    u(x+\eta) - u(x) &= \nabla u(x)\cdot \eta + o(|\eta |) \\
+    v(x+\eta) - v(x) &= \nabla v(x) \eta + o(|\eta |)
+  \end{aligned}
+\end{equation}
+for all $\eta \in \R^3$. In particular, all the directional
+derivatives exist. Hence,
+\begin{equation}
+  \label{eq:directional-ders}
+  \begin{aligned}
+    \nabla u(x)\cdot \eta &= \frac{d}{d\alpha} u(x+\alpha \eta) \mid_{\alpha=0} \\
+    \nabla v(x)\eta &= \frac{d}{d\alpha} v(x+\alpha \eta) \mid_{\alpha=0}
+  \end{aligned}
+\end{equation}
+To make the computation nicer, set $y = 0$ in
+\eqref{eq:potential}. So
+\begin{equation}
+  \label{eq:potential-gradient}
+  \begin{aligned}
+    \nabla(\frac{1}{|x+\alpha\eta |}\mid_{\alpha=0} &=
+    \frac{d}{d\alpha}\left[(x+\alpha\eta)\cdot (x+\alpha\eta)\right]^{-1/2} \mid_{\alpha =0} \\
+    &= \frac{-1}{2}\left(\frac{2x\cdot \eta)}{(x\cdot x)^{3/2}}\right) \\
+    &= \frac{-x}{|x|^3}\cdot \eta    
+  \end{aligned}
+\end{equation}
+Plugging this back in we arrive at
+\begin{equation}
+  \label{eq:grad-u}
+  \nabla u = \frac{-\rho}{|x-y|^2}\frac{x-y}{|x-y|} = f
+\end{equation}
+
+\subsection{Varying the Denisty}
+Now suppose that the fixed body $M$ is a domain $\Omega \subset \R^3$
+with distributed mass density $\rho(y) \geq 0$ in $\Omega$.
+
+\todo{insert new figure}
+
+Then in the case the potential is
+\begin{equation}
+  \label{eq:varied-potential}
+  u(x) = \int_\Omega \frac{\rho(y)}{|x-y|}dy
+\end{equation}
+For $x \not\in \overline{\Omega}$ we get
+\begin{equation}
+  \label{eq:varied-grad}
+  \begin{aligned}
+    \nabla u &= \int_{\Omega} \rho(y) \nabla_x\left(\frac{1}{|x-y|}\right)dy \\
+    &= \underbrace{-\int_{\Omega} \frac{-\rho}{|x-y|^2}\frac{x-y}{|x-y|^2}dy}_{
+      \text{total gravitational force experienced by } m \text{ at } x
+    }
+  \end{aligned}
+\end{equation}
+Recall that
+\begin{equation}
+  \label{eq:trace-laplacian}
+  \lap u = \nabla \cdot \nabla u = \trace \grad^2u
+\end{equation}
+Let's use the same trick as before to compute the second gradient
+\begin{equation}
+  \label{eq:varied-grad-comp}
+  \begin{aligned}
+    \grad^2 u(x)\eta &= \frac{d}{d\alpha}(\grad u(x+\alpha\eta))\mid_{\alpha = 0} \\
+    &= -\frac{d}{d\alpha}\left(\frac{x+\alpha\eta}
+      {[(x+\alpha\eta) \cdot (x+\alpha\eta)]^{3/2}}\right) \mid_{\alpha=0} \\
+    &= -\left[ \frac{1}{|x|^3}\eta - \frac{3}{2}x\left(
+        \frac{2x\cdot\eta}{|x|^5}\right)\right]
+  \end{aligned}
+\end{equation}
+Recall that $(a \otimes b)c = a b\cdot c$ and that in
+\eqref{eq:varied-grad-comp} we see the term $x x\cdot\eta$
+appear. Doing the substitution gives us
+\begin{equation}
+  \label{eq:finish-grad-comp}
+  \grad^2 u = -\frac{1}{|x|^3}\left[
+    \eta - 3\left(\frac{x}{|x|} \otimes \frac{x}{|x|}\right)\eta
+  \right]
+\end{equation}
+Which implies
+\begin{equation}
+  \label{eq:snd-grad}
+  \grad^2 u(x) = -\frac{1}{|x|^3}\left[
+    I - 3\left(\frac{x}{|x|} \otimes \frac{x}{|x|}\right)
+  \right]
+\end{equation}
+If we plug this into \eqref{eq:varied-grad} we get
+\begin{equation}
+  \label{eq:snd-grad-int}
+  \begin{aligned}
+    \grad^2 u(x) = -\int_{\Omega} \frac{\rho(y)}{|x-y|^3}\left[
+      I - 3\left(\frac{x-y}{|x-y|} \otimes \frac{x-y}{|x-y|}\right)
+    \right]dy && x\not\in\partial\Omega
+  \end{aligned}
+\end{equation}
+And by \eqref{eq:trace-laplacian} we get
+\begin{equation}
+  \label{eq:laplace-u}
+  \begin{aligned}
+    \lap u(x) &= -\int_{\Omega}\frac{\rho(y)}{|x-y|^3}\trace \left[ I
+      - 3\left(\frac{x-y}{|x-y|} \otimes
+        \frac{x-y}{|x-y|}\right)\right]dy
+    && (x \not\in\overline{\Omega}) \\
+    &= -\int_{\Omega}\frac{\rho(y)}{|x-y|^3}\left[\trace(I) - \trace
+      3\left(\frac{x-y}{|x-y|} \otimes
+        \frac{x-y}{|x-y|}\right)\right]dy \\
+    &= -\int_{\Omega}\frac{\rho(y)}{|x-y|^3}\left[3 - 3
+      \left(\frac{x-y}{|x-y|} \cdot
+        \frac{x-y}{|x-y|}\right)\right]dy \\
+    &= 0 && \text{because }\left(\frac{x-y}{|x-y|} \cdot
+      \frac{x-y}{|x-y|} = 1\right)
+  \end{aligned}
+\end{equation}
+So we finally arrive at
+\begin{ndefn}(Laplace Equation)
+
+  The \textbf{Laplace equation} is the second-order linear PDE
+  \begin{equation}
+    \label{eq:laplace}
+    \lap u = 0
+  \end{equation}
+\end{ndefn}
+
+\subsection{Laplace's Idea}
+
+Laplace's motivation for this was that \eqref{eq:varied-potential} is
+difficult to evaluate compute in general. However, solving his
+equation \eqref{eq:laplace} was more direct and that the strategy for
+understanding these gravitational phenomena should be to solve
+\eqref{eq:laplace} in lieu of evaluating \eqref{eq:varied-potential}.
+
+Another important feature of the derivation was that we required
+$x\not\in\partial\Omega$ in \eqref{eq:snd-grad-int} so that we could
+freely pass the derivatives inside of the integral. Later, Poisson and
+Gauss showed (with restrictions on $\rho$) that
+\begin{equation}
+  \label{eq:poisson}
+  \begin{aligned}
+    -\lap u = \rho && x \in \Omega
+  \end{aligned}
+\end{equation}
+As we will see shortly, this is much harder to prove due to not being
+able to pass the $\lap$ inside the integral!
+\end{document}
