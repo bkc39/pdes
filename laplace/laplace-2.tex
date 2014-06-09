@@ -1,0 +1,146 @@
+\documentclass{bkcnotes}
+\usepackage{bkc}
+
+\setcourse{Partial Differential Equations}
+\setnotetitle{Laplace Equation II\ : \\ The Fundamental Solution}
+\setnoteimage{img/partial}
+
+\newcommand{\todo}[1]{{\bf TODO: } #1\\}
+
+\begin{document}
+\maketitle
+
+Ok. Let's get down to business
+
+\section{Solving the Laplace Equation}
+We want to solve Laplace's equation
+\begin{equation}
+  \label{eq:laplace}
+  \lap u = 0
+\end{equation}
+and discover as much as we can about the properties of the solutions
+before coming across an explicit representation formula. The solutions
+of \eqref{eq:laplace} have a special name
+
+\begin{ndefn}(Harmonic Function)
+  
+  A $C^2$ function satisfying \eqref{eq:laplace} is called
+  \textbf{harmonic}.
+\end{ndefn}
+
+With the transport equation our strategy for the solution consisted of
+two steps:
+\begin{enumerate}
+\item Identify a symmetry property of the solution.
+\item Use the symmetry to reduce the PDE to an ODE.
+\item Solve the ODE.
+\end{enumerate}
+For Laplace, we are going to run with this again. Before we had
+\emph{translational symmetry} and the ODE was a simple one $v' = f$
+(in the nonhomogeneous case). this time around things will be a bit
+messier, but the same principles are at work.
+
+\subsection{Symmetry Properties}
+Motivated by the discussion in the derivation last time, we would
+expect the solutions to have \emph{rotational symmetry} because points
+equidistant from the same mass should experience the same
+gravitational force from that mass. Let's formalize this
+intution. Recall that rotation matrices belong to a special matrix
+group
+
+\begin{ndefn}(Special Orthogonal Group)
+  
+  The \textbf{special orthogonal group}\footnote{Verify that this set
+    in fact merits the word "group"} $O(n)$ consists of all square $n
+  \times n$ matrices, $A$ satisfying:
+  \begin{itemize}
+  \item $A^tA = I$
+  \item $\det A = \pm 1$
+  \end{itemize}
+\end{ndefn}
+We want to verify the following
+\begin{nprop}(Rotational Symmetry of Laplace Equation)
+
+  Suppose $u$ satisfies \eqref{eq:laplace}. Then for all $Q \in O(n)$
+  the function
+  \begin{equation}
+    \label{eq:w}
+    w(x) = u(Qx)
+  \end{equation}
+  is also satisfies \eqref{eq:laplace}.
+\end{nprop}
+\begin{proof}
+  This boils down to a computation. For a start,
+  \begin{equation}
+    \label{eq:w-grad-comp}
+    \begin{aligned}
+      \grad w(x) \cdot \eta &= \frac{d}{d\alpha}
+      u(Q(x+\alpha\eta))\mid_{\alpha=0}
+      && (\forall\eta \in \R^n) \\
+      &= \grad u(Qx)\cdot Q\eta \\
+      &= Q^t\grad u(Qx)\cdot \eta
+    \end{aligned}
+  \end{equation}
+
+  And so
+  \begin{equation}
+    \label{eq:grad-w}
+    \grad w(x) = Q^t\grad u(Qx)
+  \end{equation}
+  And for the second gradient we get
+  \begin{equation}
+    \label{eq:w-snd-grad-comp}
+    \begin{aligned}
+      \grad^2w(x)\eta &= \frac{d}{d\alpha}(Q^t\grad
+      u(Q(x+\alpha\eta)))\mid_{\alpha=0} \\
+      &= Q^t\grad^2u(Qx)Q\eta
+    \end{aligned}
+  \end{equation}
+  Consequently,
+  \begin{equation}
+    \label{eq:w-snd-grad}
+    \grad^2w(x) = Q^t\grad^2(Qx)Q
+  \end{equation}
+  Which finally gives us
+  \begin{equation}
+    \label{eq:lap-w}
+    \begin{aligned}
+      \lap w(x) &= \trace (Q^t\grad^2u(Qx)Q) \\
+      &= \trace (\underbrace{Q^tQ}_{I}\grad^2u(Qx))
+      && (\text{because } \trace (AB) = \trace(BA)) \\
+      &= \lap(Qx) \\
+      &= 0
+    \end{aligned}
+  \end{equation}
+  As desired.
+\end{proof}
+
+\subsection{Reduction to an ODE}
+Step one complete. Now that we have verified our symmetry property, we
+need to use this to find solutions of the form $u(x) = v(|x|)$. Where
+it's convenient we will let $r = |x|$. This will lead us to the ODE we
+need, completing the second step in our plan. It's another computation
+grind
+\begin{equation}
+  \label{eq:grad-u-comp}
+  \begin{aligned}
+    \grad u(x) \cdot \eta &= \frac{d}{d\alpha} v([(x+\alpha\eta)\cdot
+    (x+\alpha\eta)]^{1/2}])\mid_{\alpha = 0} \\
+    &= v'(|x|)\left(\frac{1}{2}\frac{2x\cdot\eta}{|x|}\right)
+  \end{aligned}
+\end{equation}
+Which implies
+\begin{equation}
+  \label{eq:grad-u}
+  \grad u(x) = \frac{v'(|x|)}{|x|}x
+\end{equation}
+Let
+\begin{equation}
+  \label{eq:g-def}
+  g(|x|) = \frac{v'(|x|)}{|x|}
+\end{equation}
+
+\subsection{Solving the ODE}
+
+\section{Properties of the Fundamental Solution}
+\end{document}
