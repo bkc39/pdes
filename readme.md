@@ -3,7 +3,7 @@
 This is a collection of notes on Partial Differential Equations and
 Distribution Theory based off of my experience in
 [Math 6190](http://www.math.cornell.edu/m/Courses/GradCourses/fa13/6190)
-as well as the books by
+with Prof. Tim Healey as well as the books by
 [Evans](http://www.amazon.com/Partial-Differential-Equations-Graduate-Mathematics/dp/0821849743),
 [Stein and Shakarchi](http://www.amazon.com/Functional-Analysis-Introduction-Princeton-Lectures/dp/0691113874/ref=sr_1_3?s=books&ie=UTF8&qid=1401481850&sr=1-3&keywords=stein+and+shakarchi),
 [Strauss](http://www.amazon.com/Partial-Differential-Equations-An-Introduction/dp/0470054565) and
