@@ -139,9 +139,110 @@ Let
   \label{eq:g-def}
   g(|x|) = \frac{v'(|x|)}{|x|}
 \end{equation}
-
+Now we use our trace trickery to finish computing the laplacian in
+terms of $g$. We get
+\begin{equation}
+  \label{eq:snd-grad-comp}
+  \begin{aligned}
+    \grad^2u(x) \eta &= \frac{d}{d\alpha}\left(g((x +
+      \alpha\eta)\cdot(x +
+      \alpha\eta)^{1/2})(x+\alpha\eta)\right)\mid_{\alpha = 0} \\
+    &= g'(x)\left(\frac{1}{2}\frac{2x\cdot\eta}{|x|}\right) x + g(|x|)\eta \\
+    &= g(x)I + \frac{g'(|x|)}{|x|}(x \otimes x)
+  \end{aligned}
+\end{equation}
+Doing some calculus, we also see
+\begin{equation}
+  \label{eq:g-prime-def}
+  g'(r) = \frac{v''(r)}{r} - \frac{v'(r)}{r^2}
+\end{equation}
+Throwing \eqref{eq:g-prime-def} into \eqref{eq:snd-grad-comp} we get
+\begin{equation}
+  \label{eq:snd-grad}
+  \grad^2u(x) =
+  \frac{v'(|x|)}{|x|}I + \left(v''(|x|) - 
+    \frac{v'(|x|}{r}\right)\left(\frac{x}{|x|} \otimes \frac{x}{|x|}\right)
+\end{equation}
+We are close now. Just hit \eqref{eq:snd-grad} with the trace operator
+and we get
+\begin{equation}
+  \label{eq:laplace-ode}
+  \lap u = \trace\grad^2 u
+  = \frac{nv'(r)}{r} - \left(v''(r) - \frac{v'(r)}{r}\right)
+  = v'' + \frac{(n-1)}{r}v'
+\end{equation}
+So although it required a bit more coaxing than our friend the
+transport equation, we can still reduce the PDE to an ODE.
 \subsection{Solving the ODE}
+Two steps down. Fortunately, this part is straightforward. We have to
+solve the ODE \eqref{eq:laplace-ode}, namely
+\begin{equation}
+  \label{eq:ode-to-solve}
+  v'' + \frac{(n-1)}{r}v' = 0
+\end{equation}
+Before solving this, note that the qualitative behavior of the
+solutions will depend on $n$. Also, we should expect that $r$ in the
+denominator to cause some problems for the solutions as $r \to
+0$. With that in mind, let's dig in.
 
-\section{Properties of the Fundamental Solution}
+We begin by making the problem even easier, change variables with
+$\rho = v'$ and \eqref{eq:ode-to-solve} becomes
+\begin{equation}
+  \label{eq:ode-first-order}
+  \rho' + \frac{n-1}{r}\rho = r\rho' + (n-1)\rho = 0
+\end{equation}
+This is easy enough to solve at this point. I'll save you the time, we
+get solutions looking like
+\begin{equation}
+  \label{eq:ode-soln}
+  v(r) =
+  \begin{cases}
+    \alpha_1\ln{r} + \alpha_2 & n=2 \\
+    \frac{\alpha_1}{r^{n-2}} + \alpha_2 & n \geq 3
+  \end{cases}
+\end{equation}
 
+\section{The Fundamental Solution}
+Hopefully the preceeding considerations motivate the following
+\begin{ndefn}(Fundamental Solution)
+
+  Let $\omega_n$ denote the volume of the unit ball in $\R^n$. The
+  function
+  \begin{equation}
+    \label{eq:fundamental-solution}
+    \Phi(x) =
+    \begin{cases}
+      \frac{1}{2\pi}\ln{|x|} & n=2 \\
+      \frac{1}{n(n-2)\omega_n |x|^{n-2}} & n \geq 3
+    \end{cases}
+  \end{equation}
+  is called the \textbf{fundamental solution} of the Laplace equation.
+\end{ndefn}
+Whoa! You may be asking "Why this choice of constants?". It turns out
+that is what they have to be in order for this to really qualify for
+the term "fundamental solution". More on that later. Another quick
+remark on the definition, does this thing really merit the term
+\emph{the} fundamental solution? Turns out the answer is "yes". More on
+that later as well. This notion of fundamental solution is going to be
+a recurring theme in our study of these classical PDEs.
+
+\subsection{Preliminary Observations}
+This is mostly a recap of how we got to this point. We followed the
+same outline as in the transport equation: look for symmetry, use it
+to reduce the PDE to an ODE and then solve that. Unlike the transport
+equation, however, \eqref{eq:fundamental-solution} is a little bit
+more cryptic. And how we can use it to generate other solutions is
+more unclear still. For now, let's just note that $\Phi$ is
+well-defined in $\R^n$ except for the origin. Moreover, everywhere it
+is defined, it satisfies $\lap \Phi = 0$. The key thing about that
+last observation is that
+\begin{equation}
+  \label{eq:fundamental-solution-convolve}
+  \lap_x\Phi(x-y) = 0, x\neq y
+\end{equation}
+We are going to get a lot of mileage out of
+\eqref{eq:fundamental-solution-convolve}. The looks of that should
+start turning the convolution engine and we can get going on
+constructing new solutions via a convolution. This is in fact the next
+plan of action.
 \end{document}
