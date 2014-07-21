@@ -7,7 +7,8 @@ PDFS:=$(addprefix $(BUILD_DIR)/,$(patsubst %.tex,%.pdf,$(SRC)))
 LATEX=latexmk
 LATEXMK_OPTIONS=\
 	-pdf \
-	-silent
+	-silent \
+	-f
 
 LATEX_TMP_EXTS=.aux .log .fls .fdb_latexmk .out
 
