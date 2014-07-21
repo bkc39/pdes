@@ -245,4 +245,89 @@ We are going to get a lot of mileage out of
 start turning the convolution engine and we can get going on
 constructing new solutions via a convolution. This is in fact the next
 plan of action.
+
+\subsection{Some Estimates}
+That singularity at the origin is going to require careful
+consideration in our subsequent developments. In particular, when we
+try to use $\Phi$ in a convolution with some function $f$, we are
+going to want to ensure that $f$ can kill the rapid growth of $\Phi$
+as we get nearer to the origin. Some estimates for $\Phi$'s
+derivatives will prove useful to this end.
+
+We summarize these growth estimates in the following proposition,
+\begin{nprop}
+  There exists constants $C_1,C_2$ such that
+  \begin{enumerate}
+  \item
+    \begin{equation}
+      \label{eq:phi-grad-estimate}
+      |\Phi(x)| \leq \frac{C_1}{|x|^{n-1}}
+    \end{equation}
+  \item
+    \begin{equation}
+      \label{eq:phi-snd-grad-estimate}
+      |\grad^2 \Phi(x)| \leq \frac{C_2}{|x|^n}
+    \end{equation}
+  \end{enumerate}
+\end{nprop}
+\begin{proof}
+  Let's start with \eqref{eq:phi-grad-estimate}. This comes straight
+  from \eqref{eq:grad-u} by plugging in the particular solution
+  $\Phi$. For convenience, set $\tilde{\Phi}(x) = \Phi(|x|)$. We see
+  \begin{equation}
+    \label{eq:sub-phi-in-grad}
+    \grad \Phi(x) = \frac{\Phi'(x)}{|x|}x
+  \end{equation}
+  \todo{finish this. Healey's proof is somewhat unclear. Consult Evans.}
+
+  Continuing with \eqref{eq:phi-snd-grad-estimate} this time we return
+  to \eqref{eq:snd-grad} and run the computation on $\Phi$. This is
+  going to be more acrobatics with matrix algebra. Indeed,
+  \begin{equation}
+    \label{eq:sub-phi-in-snd-grad}
+    \grad^2\Phi(x) =
+    \frac{\tilde{\Phi}'(x)}{|x|}I
+    + \left(\tilde{\Phi}''(x) - 
+      \frac{\tilde{\Phi}'(x}{|x|}\right)\left(\frac{x}{|x|} \otimes 
+      \frac{x}{|x|}\right)
+  \end{equation}
+  Appealing directly to the definition \eqref{eq:fundamental-solution}
+  we compute
+  \begin{equation}
+    \label{eq:right-coefficient-estimate}
+    \frac{\tilde{\Phi}'(x)}{|x|} \leq \frac{M_1}{|x|^n}    
+  \end{equation}
+  and
+  \begin{equation}
+    \label{eq:left-coefficient-estimate}
+    \frac{\widetilde{\Phi}''(x)}{|x|} \leq \frac{M_2}{|x|^n}
+  \end{equation}
+  Now plug the estimates \eqref{eq:right-coefficient-estimate} and
+  \eqref{eq:left-coefficient-estimate} into
+  \eqref{eq:sub-phi-in-snd-grad} to yield
+  \begin{equation}
+    \label{eq:nsd-grad-norm-estimate}
+    |\grad^2\Phi(x)| =
+    \frac{M_2}{|x|^n}\left| I - \left(\frac{x}{|x|}\otimes 
+        \frac{x}{|x|}\right)\right| -
+    \frac{M_1}{|x|^n}\left|\frac{x}{|x|}\otimes \frac{x}{|x|} \right|
+  \end{equation}
+  We could just end here, noting that because $x/|x|$ is a unit
+  vector, and so the norms are clearly some finite constants and we
+  just absorb those together to get the desired result. However, there
+  is some more fun to be had in the computation. Let $e =
+  x/|x|$. Watch:
+  \begin{equation}
+    \label{eq:1}
+    \begin{aligned}
+      |I - e \otimes e|^2 &= (I - e \otimes e)\cdot (I - e \otimes e) \\
+      &= I \cdot I - 2(e \otimes e)\cdot I + (e \otimes e)\cdot(e\otimes e) \\
+      &= \trace I^2 - 2\trace\left((e \otimes e) I\right) + \trace
+      e\otimes e \\
+      &= \trace I - 2\trace(e \otimes e) + \trace (e\otimes e)^2 \\
+      &= n+1
+    \end{aligned}
+  \end{equation}
+  Cute.
+\end{proof}
 \end{document}
