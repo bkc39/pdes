@@ -19,10 +19,38 @@ respect to convolution. The plan this time around is to exploit these
 two properties to construct more solutions and solve the inhomogeneous
 version of the Laplace equation, Poisson's equation.
 
-\section{Some Estimates for $Phi$'s Derivatives}
-$\Phi$ and its derivatives are going to be a focal point of our
-discussion. That pesky singularity that $\Phi$ has means that we are
-going to need some solid estimates that we can use that will help us
-wrestle that singularity back into the realm of well defined
-functions. Let's begin.
+\section{A First Attempt}
+Despite the fact that we know the path we should travel to get more
+solutions, let's take the scenic route and explore a reasonable but
+ultimately doomed attempt. Hopefully we will find this instructive.
+
+\subsection{Curbing the Singularity}
+As we noted last time, we need to wrestle with the singularity that
+$f$ has at 0. The first plan is to hit it with a nice function. Just
+to establish notation, define
+\begin{ndefn}(Compact Support)
+
+  The \textbf{support} of a function $f$ is the closure of the set
+  \begin{equation}
+    \label{eq:support}
+    \supp{f} = \{x \suchthat f(x) \neq 0\}
+  \end{equation}
+  A function is said to be of \textbf{compact support} if $\supp{f}$
+  is bounded\footnote{It is closed by definition.}. We also will use
+  the notation $C^k_c$ for the space of $k$ times continuously
+  differentiable functions with compact support.
+\end{ndefn}
+Suppose that $f \in C_c(\R^n)$ and consider the (improper) integral
+\begin{equation}
+  \label{eq:i-defn}
+  I = \int_{\R^n} f(x)\Phi(x)dx
+\end{equation}
+Since $f$ has compact support there is some ball $B_R$ centered at the
+origin such that \eqref{eq:i-defn} can be estimated for $n \geq 3$ as
+\begin{equation}
+  \label{eq:i-estimate}
+  |I| \leq \left| \int_{B_R}f(x)\Phi(x)dx\right|
+  \leq (\sup_{B_R} f)\int_{B_R}\frac{1}{|x|^{n-2}}dx
+\end{equation}
+
 \end{document}
